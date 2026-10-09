@@ -1,7 +1,7 @@
-import serverlessExpress from '@codegenie/serverless-express';
+import { configure } from '@codegenie/serverless-express';
 import type { Handler } from 'aws-lambda';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../../src/app.module';
+import { AppModule } from '../../src/app.module.js';
 
 let cachedServer: Handler | undefined;
 
@@ -12,15 +12,13 @@ async function bootstrap(): Promise<Handler> {
 
   const expressApp = app.getHttpAdapter().getInstance();
 
-  return serverlessExpress({
-    app: expressApp,
-  });
+  return configure({ app: expressApp }) as Handler;
 }
 
-export const handler: Handler = async (event, context, callback) => {
+export const handler: Handler = async (event, context,callback) => {
   if (!cachedServer) {
     cachedServer = await bootstrap();
   }
 
-  return cachedServer(event, context, callback);
+  return cachedServer(event, context,callback);
 };
