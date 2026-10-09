@@ -7,7 +7,7 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "yarn build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
